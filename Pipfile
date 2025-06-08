@@ -1,0 +1,17 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+fastapi = {extras = ["standard"], version = "*"}
+pydantic = {extras = ["timezone", "email"], version = "*"}
+sqlmodel = "*"
+psycopg2-binary = "*"
+python-telegram-bot = "*"
+alembic = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.12"
