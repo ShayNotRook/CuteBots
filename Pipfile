@@ -10,6 +10,7 @@ sqlmodel = "*"
 psycopg2-binary = "*"
 python-telegram-bot = "*"
 alembic = "*"
+fastapi-admin = "*"
 
 [dev-packages]
 
