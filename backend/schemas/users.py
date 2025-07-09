@@ -8,6 +8,7 @@ class UserLogin(BaseModel):
 
 class UserRegister(BaseModel):
     telegram_id: str
+    telegram_phone_num: str
     username: str
     name: str
     password: str    

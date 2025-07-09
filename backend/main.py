@@ -1,55 +1,20 @@
-from typing import Annotated, Optional
+from typing import Annotated
 
-from fastapi import FastAPI, HTTPException, Depends
+from fastapi import FastAPI, Depends
+# from fastapi_admin import app as admin_app
+
 from sqlalchemy.orm import Session
-from pydantic import BaseModel
 
-from backend.db import models as db_models
+from backend.models import Base
+from backend.models import *
 from backend.db.database import db_engine, SessionLocal
-from backend.api.routes import router
-from backend.api.validators import UserModel
+from backend.api.v1 import auth 
+
 
 
 app = FastAPI()
-app.include_router(router)
 
-db_models.Base.metadata.create_all(bind=db_engine)
-
-
-# Database handler
-async def get_db():
-    db = await SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+Base.metadata.create_all(bind=db_engine)
 
 
-# Dependencies injection
-db_dependency = Annotated[Session, Depends(get_db)]
 
-
-@app.get('/')
-async def home():
-    return {"message": "Welcome"}
-
-
-# API Endpoints
-@app.post('/users/create/')
-async def create_user(user: UserModel, db: db_dependency, user_data: dict):
-    user_schema : UserModel = user(**user_data)
-    db_item =  db_models.User(**user_schema.model_dump())
-    
-    session = SessionLocal()
-    
-    session.add(db_item)
-    session.commit()
-    session.refresh(db_item)
-    session.close()
-    
-    return db_item
-
-
-@app.post("/users/login/")
-async def login(user: UserModel, db: db_dependency, user_data: dict):
-    pass

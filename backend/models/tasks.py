@@ -12,7 +12,7 @@ class BaseTask(Base):
     
     
 class DailyTasks(BaseTask):
-    __tablename__ = 'Daily Tasks'
+    __tablename__ = 'daily_tasks'
     
     prize =             Column(Integer)
     
